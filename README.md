@@ -1,2 +1,5 @@
 # react-animation-gdp
-Animation GDP increment
+Animation GDP increment of each provinces in China
+
+Inspired by https://www.bilibili.com/video/av24503002
+
