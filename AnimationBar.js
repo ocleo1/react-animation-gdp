@@ -52,14 +52,14 @@ export default class AnimationBar extends React.Component {
     const { width } = this.state;
 
     return (
-      <div>
-        <div
-          style={{
-            height: height,
-            width: width,
-            backgroundColor: color
-          }} />
-      </div>
+      <div
+        style={{
+          backgroundColor: color,
+          height: height,
+          width: width,
+          marginTop: 5,
+          marginBottom: 5,
+        }} />
     );
   }
 }
