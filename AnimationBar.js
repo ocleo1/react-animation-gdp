@@ -29,11 +29,13 @@ export default class AnimationBar extends React.Component {
   }
 
   componentDidUpdate() {
-    const { width } = this.props;
+    const { width, onDone } = this.props;
+
     if (this.state.width < width) {
       this._requestID = requestAnimationFrame(this.increase);
     } else {
       cancelAnimationFrame(this._requestID);
+      onDone(true);
     }
   }
 

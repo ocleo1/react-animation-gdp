@@ -17,41 +17,49 @@ class Example extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      duration: 5 * 60, // 60Hz per second
       year: 0,
       provinces: [
         { name: 'guangdong', color: 'gray' },
         { name: 'jiangsu',   color: 'orange' }
       ]
     };
+
+    this._onDone = this.onDone.bind(this);
   }
 
-  componentDidMount() {
-    this._intervalID = setInterval(() => {
-      if (this.state.year > 9) {
-        clearInterval(this._intervalID);
-      } else {
-        this.setState((prevState, props) => {
-          return {
-            year: prevState.year + 1
-          }
-        });
-      }
-    }, 10000);
+  onDone(ready) {
+    if (ready && this.state.year < 9) {
+      this.setState((prevState, props) => {
+        return {
+          year: prevState.year + 1
+        }
+      });
+    }
   }
 
   render() {
-    const { provinces, year } = this.state;
+    const { duration, provinces, year } = this.state;
 
     return (
       <div>
       {
         provinces.map((province, index) => {
-          const width = Math.floor(GDP[province.name][year] / 100);
+          const gdp = GDP[province.name][year];
+          const width = Math.floor(gdp / 100);
+
+          let prevGDP = 0;
+          if (year > 0) {
+            prevGDP = GDP[province.name][year-1];
+          }
+          const speed = parseFloat(((gdp - prevGDP) / (100 * duration)).toFixed(2));
+
           return (
             <AnimationBar
               color={province.color}
               key={index}
-              speed={2}
+              onDone={this._onDone}
+              speed={speed}
               width={width} />
           );
         })
