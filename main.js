@@ -26,13 +26,14 @@ class Example extends React.Component {
     };
 
     this._onDone = this.onDone.bind(this);
-    this._finished = new Array(this.state.provinces.length).fill(false);
+    this._count = 0;
   }
 
-  onDone(index) {
-    this._finished[index] = true;
-    var unfinished = this._finished.filter(item => !item);
-    if (unfinished.length === 0 && this.state.year < 9) {
+  onDone() {
+    this._count++;
+    const { provinces, year } = this.state;
+    if (this._count === provinces.length && year < 9) {
+      this._count = 0;
       this.setState((prevState, props) => {
         return {
           year: prevState.year + 1
@@ -60,7 +61,6 @@ class Example extends React.Component {
           return (
             <AnimationBar
               color={province.color}
-              index={index}
               key={index}
               onDone={this._onDone}
               speed={speed}
