@@ -60,11 +60,20 @@ class Example extends React.Component {
 
           return (
             <AnimationBar
+              style={{
+                marginTop: 5,
+                marginBottom: 5,
+                height: 30,
+                lineHeight: '30px'
+              }}
               color={province.color}
+              gdp={gdp}
               key={index}
+              label={province.name}
               onDone={this._onDone}
               speed={speed}
-              width={width} />
+              width={width}
+              labelWidth={100} />
           );
         })
       }

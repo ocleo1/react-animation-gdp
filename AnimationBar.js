@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class AnimationBar extends React.Component {
-	static propTypes = {
-		color: PropTypes.string,
-		height: PropTypes.number,
-		speed: PropTypes.number,
-		width: PropTypes.number.isRequired
-	};
+  static propTypes = {
+    color: PropTypes.string,
+    height: PropTypes.number,
+    speed: PropTypes.number,
+    width: PropTypes.number.isRequired,
+    labelWidth: PropTypes.number
+  };
 
-	static defaultProps = {
-		color: 'black',
-		height: 30,
-		speed: 1
-	};
+  static defaultProps = {
+    color: 'black',
+    height: 30,
+    speed: 1
+  };
 
   constructor(props) {
     super(props);
@@ -40,7 +41,7 @@ export default class AnimationBar extends React.Component {
   }
 
   increase() {
-		const { speed } = this.props;
+    const { speed } = this.props;
 
     this.setState((prevState, props) => {
       return {
@@ -50,19 +51,30 @@ export default class AnimationBar extends React.Component {
   }
 
   render() {
-		const { height, color } = this.props;
+    const { color, gdp, style, label, labelWidth } = this.props;
     const { width } = this.state;
 
     return (
-      <div
-        style={{
-          backgroundColor: color,
-          height: height,
-          width: width,
-          marginTop: 5,
-          marginBottom: 5,
-        }} />
+      <div style={style}>
+        <div style={{...styles.inlineBlock, width: labelWidth}}>{label}</div>
+        <div
+          style={{
+            ...styles.inlineBlock,
+            backgroundColor: color,
+            height: 'inherit',
+            width: width
+          }} />
+        <div style={styles.inlineBlock}>{gdp}</div>
+      </div>
     );
   }
 }
+
+const styles = {
+  inlineBlock: {
+    display: 'inline-block',
+    lineHeight: 'inherit',
+    verticalAlign: 'top'
+  }
+};
 
