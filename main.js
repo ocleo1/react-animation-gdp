@@ -68,7 +68,6 @@ class Example extends React.Component {
               color={province.color}
               gdp={gdp}
               key={index}
-              label={province.name}
               onDone={this._onDone}
               speed={speed}
               width={width} />

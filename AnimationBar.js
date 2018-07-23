@@ -50,14 +50,11 @@ export default class AnimationBar extends React.Component {
   }
 
   render() {
-    const { color, gdp, style, height, label } = this.props;
+    const { color, gdp, style, height } = this.props;
     const { width } = this.state;
 
     return (
       <div style={style}>
-        {
-          !!label ? <div>{label}</div> : null
-        }
         <div
           style={{
             ...styles.inlineBlock,
