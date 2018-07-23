@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 export default class AnimationBar extends React.Component {
   static propTypes = {
     color: PropTypes.string,
-    height: PropTypes.number,
     speed: PropTypes.number,
-    width: PropTypes.number.isRequired
+    width: PropTypes.number.isRequired,
+    style: PropTypes.shape({
+      height: PropTypes.number.isRequired
+    })
   };
 
   static defaultProps = {
     color: 'black',
-    height: 30,
     speed: 1
   };
 
@@ -21,20 +22,20 @@ export default class AnimationBar extends React.Component {
       width: 0,
     };
 
-    this.increase = this.increase.bind(this);
+    this._increase = this.increase.bind(this);
   }
 
   componentDidMount() {
-    this._requestID = requestAnimationFrame(this.increase);
+    this._animationID = requestAnimationFrame(this._increase);
   }
 
   componentDidUpdate() {
     const { width, onDone } = this.props;
 
     if (this.state.width < width) {
-      this._requestID = requestAnimationFrame(this.increase);
+      this._animationID = requestAnimationFrame(this._increase);
     } else {
-      cancelAnimationFrame(this._requestID);
+      cancelAnimationFrame(this._animationID);
       onDone();
     }
   }
@@ -50,26 +51,18 @@ export default class AnimationBar extends React.Component {
   }
 
   render() {
-    const { color, gdp, style, height } = this.props;
+    const { color, gdp, style } = this.props;
     const { width } = this.state;
 
     return (
-      <div style={style}>
+      <div style={{...style, lineHeight: style.height + 'px'}}>
         <div
           style={{
             ...styles.inlineBlock,
             backgroundColor: color,
-            height: height,
-            lineHeight: height + 'px',
             width: width
           }} />
-        <div style={{
-          ...styles.inlineBlock,
-          height: height,
-          lineHeight: height + 'px',
-          }}>
-          {gdp}
-        </div>
+        <div style={styles.inlineBlock}>{gdp}</div>
       </div>
     );
   }
@@ -78,7 +71,9 @@ export default class AnimationBar extends React.Component {
 const styles = {
   inlineBlock: {
     display: 'inline-block',
-    verticalAlign: 'top'
+    verticalAlign: 'top',
+    height: 'inherit',
+    lineHeight: 'inherit',
   }
 };
 
