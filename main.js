@@ -62,18 +62,16 @@ class Example extends React.Component {
             <AnimationBar
               style={{
                 marginTop: 5,
-                marginBottom: 5,
-                height: 30,
-                lineHeight: '30px'
+                marginBottom: 5
               }}
+              height={30}
               color={province.color}
               gdp={gdp}
               key={index}
               label={province.name}
               onDone={this._onDone}
               speed={speed}
-              width={width}
-              labelWidth={100} />
+              width={width} />
           );
         })
       }

@@ -6,8 +6,7 @@ export default class AnimationBar extends React.Component {
     color: PropTypes.string,
     height: PropTypes.number,
     speed: PropTypes.number,
-    width: PropTypes.number.isRequired,
-    labelWidth: PropTypes.number
+    width: PropTypes.number.isRequired
   };
 
   static defaultProps = {
@@ -51,20 +50,29 @@ export default class AnimationBar extends React.Component {
   }
 
   render() {
-    const { color, gdp, style, label, labelWidth } = this.props;
+    const { color, gdp, style, height, label } = this.props;
     const { width } = this.state;
 
     return (
       <div style={style}>
-        <div style={{...styles.inlineBlock, width: labelWidth}}>{label}</div>
+        {
+          !!label ? <div>{label}</div> : null
+        }
         <div
           style={{
             ...styles.inlineBlock,
             backgroundColor: color,
-            height: 'inherit',
+            height: height,
+            lineHeight: height + 'px',
             width: width
           }} />
-        <div style={styles.inlineBlock}>{gdp}</div>
+        <div style={{
+          ...styles.inlineBlock,
+          height: height,
+          lineHeight: height + 'px',
+          }}>
+          {gdp}
+        </div>
       </div>
     );
   }
@@ -73,7 +81,6 @@ export default class AnimationBar extends React.Component {
 const styles = {
   inlineBlock: {
     display: 'inline-block',
-    lineHeight: 'inherit',
     verticalAlign: 'top'
   }
 };
