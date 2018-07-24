@@ -19,7 +19,8 @@ export default class AnimationBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: 0,
+      gdp: 0,
+      width: 0
     };
 
     this._increase = this.increase.bind(this);
@@ -45,14 +46,15 @@ export default class AnimationBar extends React.Component {
 
     this.setState((prevState, props) => {
       return {
-        width: prevState.width + speed
+        gdp: prevState.gdp + speed * 100,
+        width: prevState.width + parseFloat(speed.toFixed(2))
       };
     });
   }
 
   render() {
-    const { color, gdp, style } = this.props;
-    const { width } = this.state;
+    const { color, style } = this.props;
+    const { gdp, width } = this.state;
 
     return (
       <div style={{...style, lineHeight: style.height + 'px'}}>
@@ -62,7 +64,7 @@ export default class AnimationBar extends React.Component {
             backgroundColor: color,
             width: width
           }} />
-        <div style={styles.inlineBlock}>{gdp}</div>
+        <div style={{...styles.inlineBlock, marginLeft: 5}}>{gdp.toFixed(2)}</div>
       </div>
     );
   }

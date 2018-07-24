@@ -56,7 +56,7 @@ class Example extends React.Component {
           if (year > 0) {
             prevGDP = GDP[province.name][year-1];
           }
-          const speed = parseFloat(((gdp - prevGDP) / (100 * duration)).toFixed(2));
+          const speed = parseFloat(((gdp - prevGDP) / (100 * duration)).toFixed(4));
 
           return (
             <AnimationBar
