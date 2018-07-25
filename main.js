@@ -50,7 +50,6 @@ class Example extends React.Component {
       {
         provinces.map((province, index) => {
           const gdp = GDP[province.name][year];
-          const width = Math.floor(gdp / 100);
 
           let prevGDP = 0;
           if (year > 0) {
@@ -66,11 +65,10 @@ class Example extends React.Component {
                 height: 30
               }}
               color={province.color}
-              gdp={gdp}
               key={index}
-              onDone={this._onDone}
               speed={speed}
-              width={width} />
+              value={gdp}
+              onDone={this._onDone} />
           );
         })
       }

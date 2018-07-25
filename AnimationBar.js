@@ -5,7 +5,7 @@ export default class AnimationBar extends React.Component {
   static propTypes = {
     color: PropTypes.string,
     speed: PropTypes.number,
-    width: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
     style: PropTypes.shape({
       height: PropTypes.number.isRequired
     })
@@ -19,7 +19,7 @@ export default class AnimationBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gdp: 0,
+      value: 0,
       width: 0
     };
 
@@ -31,9 +31,9 @@ export default class AnimationBar extends React.Component {
   }
 
   componentDidUpdate() {
-    const { width, onDone } = this.props;
+    const { value, onDone } = this.props;
 
-    if (this.state.width < width) {
+    if (this.state.value < value) {
       this._animationID = requestAnimationFrame(this._increase);
     } else {
       cancelAnimationFrame(this._animationID);
@@ -46,7 +46,7 @@ export default class AnimationBar extends React.Component {
 
     this.setState((prevState, props) => {
       return {
-        gdp: prevState.gdp + speed * 100,
+        value: prevState.value + speed * 100,
         width: prevState.width + parseFloat(speed.toFixed(2))
       };
     });
@@ -54,7 +54,7 @@ export default class AnimationBar extends React.Component {
 
   render() {
     const { color, style } = this.props;
-    const { gdp, width } = this.state;
+    const { value, width } = this.state;
 
     return (
       <div style={{...style, lineHeight: style.height + 'px'}}>
@@ -64,7 +64,7 @@ export default class AnimationBar extends React.Component {
             backgroundColor: color,
             width: width
           }} />
-        <div style={{...styles.inlineBlock, marginLeft: 5}}>{gdp.toFixed(2)}</div>
+        <div style={{...styles.inlineBlock, marginLeft: 5}}>{value.toFixed(2)}</div>
       </div>
     );
   }
