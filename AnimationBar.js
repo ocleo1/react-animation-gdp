@@ -19,8 +19,7 @@ export default class AnimationBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
-      width: 0
+      value: 0
     };
 
     this._increase = this.increase.bind(this);
@@ -42,19 +41,19 @@ export default class AnimationBar extends React.Component {
   }
 
   increase() {
-    const { speed } = this.props;
+    const { ratio, speed } = this.props;
 
     this.setState((prevState, props) => {
       return {
-        value: prevState.value + speed * 100,
-        width: prevState.width + parseFloat(speed.toFixed(2))
+        value: prevState.value + speed * ratio,
       };
     });
   }
 
   render() {
-    const { color, style } = this.props;
-    const { value, width } = this.state;
+    const { color, style, ratio } = this.props;
+    const { value } = this.state;
+    const width = parseFloat((value / ratio).toFixed(2));
 
     return (
       <div style={{...style, lineHeight: style.height + 'px'}}>

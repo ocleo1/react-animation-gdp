@@ -17,6 +17,7 @@ class Example extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      ratio: 100,
       duration: 5 * 60, // 60Hz per second
       year: 0,
       provinces: [
@@ -43,7 +44,7 @@ class Example extends React.Component {
   }
 
   render() {
-    const { duration, provinces, year } = this.state;
+    const { duration, ratio, provinces, year } = this.state;
 
     return (
       <div>
@@ -55,7 +56,7 @@ class Example extends React.Component {
           if (year > 0) {
             prevGDP = GDP[province.name][year-1];
           }
-          const speed = parseFloat(((gdp - prevGDP) / (100 * duration)).toFixed(4));
+          const speed = parseFloat(((gdp - prevGDP) / (ratio * duration)).toFixed(4));
 
           return (
             <AnimationBar
@@ -66,6 +67,7 @@ class Example extends React.Component {
               }}
               color={province.color}
               key={index}
+              ratio={ratio}
               speed={speed}
               value={gdp}
               onDone={this._onDone} />
