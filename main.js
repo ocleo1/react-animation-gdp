@@ -17,8 +17,8 @@ class Example extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ratio: 100,
-      duration: 5 * 60, // 60Hz per second
+      ratio: 100, // value/width ratio
+      duration: 5, // each keyframe duration
       year: 0,
       provinces: [
         { name: 'guangdong', color: 'gray' },
@@ -52,12 +52,6 @@ class Example extends React.Component {
         provinces.map((province, index) => {
           const gdp = GDP[province.name][year];
 
-          let prevGDP = 0;
-          if (year > 0) {
-            prevGDP = GDP[province.name][year-1];
-          }
-          const speed = parseFloat(((gdp - prevGDP) / (ratio * duration)).toFixed(4));
-
           return (
             <AnimationBar
               style={{
@@ -67,8 +61,8 @@ class Example extends React.Component {
               }}
               color={province.color}
               key={index}
+              duration={duration}
               ratio={ratio}
-              speed={speed}
               value={gdp}
               onDone={this._onDone} />
           );

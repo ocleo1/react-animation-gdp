@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const FREQUENCY = 60; // 60Hz per second;
+
 export default class AnimationBar extends React.Component {
   static propTypes = {
     color: PropTypes.string,
-    speed: PropTypes.number,
     value: PropTypes.number.isRequired,
     style: PropTypes.shape({
       height: PropTypes.number.isRequired
@@ -12,21 +13,32 @@ export default class AnimationBar extends React.Component {
   };
 
   static defaultProps = {
-    color: 'black',
-    speed: 1
+    color: 'black'
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      value: 0,
+      speed: 0
     };
 
     this._increase = this.increase.bind(this);
   }
 
   componentDidMount() {
-    this._animationID = requestAnimationFrame(this._increase);
+    const { value, duration } = this.props;
+    let speed = value / (duration * FREQUENCY);
+    speed = parseFloat(speed.toFixed(4));
+    this.setState({speed});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { value } = this.state;
+    const { value: newValue, duration } = nextProps;
+    let speed = (newValue - value) / (duration * FREQUENCY);
+    speed = parseFloat(speed.toFixed(4));
+    this.setState({speed});
   }
 
   componentDidUpdate() {
@@ -41,11 +53,11 @@ export default class AnimationBar extends React.Component {
   }
 
   increase() {
-    const { ratio, speed } = this.props;
+    const { speed } = this.state;
 
     this.setState((prevState, props) => {
       return {
-        value: prevState.value + speed * ratio,
+        value: prevState.value + speed,
       };
     });
   }
