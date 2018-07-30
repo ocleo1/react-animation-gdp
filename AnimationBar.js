@@ -6,6 +6,7 @@ const FREQUENCY = 60; // 60Hz per second;
 export default class AnimationBar extends React.Component {
   static propTypes = {
     color: PropTypes.string,
+    initValue: PropTypes.number,
     value: PropTypes.number.isRequired,
     style: PropTypes.shape({
       height: PropTypes.number.isRequired
@@ -13,13 +14,14 @@ export default class AnimationBar extends React.Component {
   };
 
   static defaultProps = {
-    color: 'black'
+    color: 'black',
+    initValue: 0
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: props.initValue,
       speed: 0
     };
 
