@@ -59,6 +59,9 @@ class Example extends React.Component {
                 marginBottom: 5,
                 height: 30
               }}
+              textStyle={{
+                marginLeft: 5
+              }}
               color={province.color}
               key={index}
               duration={duration}

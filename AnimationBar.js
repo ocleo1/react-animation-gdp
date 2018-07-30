@@ -63,7 +63,7 @@ export default class AnimationBar extends React.Component {
   }
 
   render() {
-    const { color, style, ratio } = this.props;
+    const { color, style, textStyle, ratio } = this.props;
     const { value } = this.state;
     const width = parseFloat((value / ratio).toFixed(2));
 
@@ -75,7 +75,7 @@ export default class AnimationBar extends React.Component {
             backgroundColor: color,
             width: width
           }} />
-        <div style={{...styles.inlineBlock, marginLeft: 5}}>{value.toFixed(2)}</div>
+        <div style={{...textStyle, ...styles.inlineBlock}}>{value.toFixed(2)}</div>
       </div>
     );
   }
