@@ -25,17 +25,15 @@ export default class AnimationBarCSS extends React.Component {
   }
 
   componentDidMount() {
+    const barNode = ReactDOM.findDOMNode(this._bar);
+    barNode.addEventListener('transitionend', () => {
+      this.props.onDone();
+    });
+
     setTimeout(() => {
-      const { ratio, value } = this.props;
-      const width = parseFloat((value / ratio).toFixed(2));
-
-      const barNode = ReactDOM.findDOMNode(this._bar);
-      barNode.style.width = width + 'px';
-
-      barNode.addEventListener('transitionend', () => {
-        console.log('transitionend');
-        this.props.onDone();
-      });
+      this.setState({
+        value: this.props.value
+      })
     }, 0);
   }
 
@@ -46,7 +44,7 @@ export default class AnimationBarCSS extends React.Component {
   }
 
   render() {
-    const { color, style, textStyle, ratio, duration, value: newValue } = this.props;
+    const { color, style, textStyle, ratio, duration } = this.props;
     const { value } = this.state;
     const width = parseFloat((value / ratio).toFixed(2));
 
@@ -60,7 +58,7 @@ export default class AnimationBarCSS extends React.Component {
             width: width,
             transition: `width ${duration}s linear`,
           }} />
-        <div style={{...textStyle, ...styles.inlineBlock}}>{newValue.toFixed(2)}</div>
+        <div style={{...textStyle, ...styles.inlineBlock}}>{value.toFixed(2)}</div>
       </div>
     );
   }
