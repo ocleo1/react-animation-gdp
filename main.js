@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AnimationBar from './AnimationBar';
+import AnimationBarCSS from './AnimationBarCSS';
 
 const GDP = {
   guangdong: [
@@ -61,6 +62,16 @@ class Example extends React.Component {
   render() {
     const { duration, ratio, provinces, year } = this.state;
 
+    let type = 'css';
+    let Bar = null;
+    switch (type) {
+      case 'css':
+        Bar = AnimationBarCSS;
+        break;
+      default:
+        Bar = AnimationBar;
+    }
+
     return (
       <div>
       {
@@ -68,7 +79,7 @@ class Example extends React.Component {
           const gdp = GDP[province.name][year];
 
           return (
-            <AnimationBar
+            <Bar
               style={{
                 marginTop: 5,
                 marginBottom: 5,
