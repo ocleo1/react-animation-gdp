@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AnimationBar from './AnimationBar';
 import AnimationBarCSS from './AnimationBarCSS';
+import AnimationBarCanvas from './AnimationBarCanvas';
 
 const GDP = {
   guangdong: [
@@ -62,9 +63,12 @@ class Example extends React.Component {
   render() {
     const { duration, ratio, provinces, year } = this.state;
 
-    let type = 'css';
+    let type = 'canvas';
     let Bar = null;
     switch (type) {
+      case 'canvas':
+        Bar = AnimationBarCanvas;
+        break;
       case 'css':
         Bar = AnimationBarCSS;
         break;
@@ -83,6 +87,7 @@ class Example extends React.Component {
               style={{
                 marginTop: 5,
                 marginBottom: 5,
+                width: 800,
                 height: 30
               }}
               textStyle={{
