@@ -61,13 +61,16 @@ export default class AnimationBar extends React.Component {
   increase() {
     if (!this._ctx) return;
 
-    const { color, style, ratio } = this.props;
+    const { color, style, ratio, textStyle } = this.props;
     const { value, speed } = this.state;
     const width = parseFloat((value / ratio).toFixed(2));
 
     this._ctx.clearRect(0, 0, style.width, style.height);
     this._ctx.fillStyle = color;
     this._ctx.fillRect(0, 0, width, style.height);
+    this._ctx.fillStyle = textStyle.color;
+    this._ctx.font = textStyle.font;
+    this._ctx.fillText(value.toFixed(2), width + 10, style.height * 2 / 3);
 
     this.setState((prevState, props) => {
       return {
@@ -85,8 +88,7 @@ export default class AnimationBar extends React.Component {
       <canvas
         ref={ ref => this._ref = ref }
         width={style.width}
-        height={style.height}
-        style={{position: 'absolute'}}>
+        height={style.height}>
         This text is displayed if your browser does not support HTML5 Canvas.
       </canvas>
     );

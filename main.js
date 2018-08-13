@@ -91,6 +91,8 @@ class Example extends React.Component {
                 height: 30
               }}
               textStyle={{
+                color: 'black',
+                font: '16px serif',
                 marginLeft: 5
               }}
               color={province.color}
