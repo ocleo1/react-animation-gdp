@@ -80,9 +80,7 @@ export default class AnimationBar extends React.Component {
   }
 
   render() {
-    const { color, style, textStyle, ratio } = this.props;
-    const { value } = this.state;
-    const width = parseFloat((value / ratio).toFixed(2));
+    const { style } = this.props;
 
     return (
       <canvas
@@ -92,26 +90,5 @@ export default class AnimationBar extends React.Component {
         This text is displayed if your browser does not support HTML5 Canvas.
       </canvas>
     );
-    return (
-      <div style={{...style, lineHeight: style.height + 'px'}}>
-        <div
-          style={{
-            ...styles.inlineBlock,
-            backgroundColor: color,
-            width: width
-          }} />
-        <div style={{...textStyle, ...styles.inlineBlock}}>{value.toFixed(2)}</div>
-      </div>
-    );
   }
 }
-
-const styles = {
-  inlineBlock: {
-    display: 'inline-block',
-    verticalAlign: 'top',
-    height: 'inherit',
-    lineHeight: 'inherit',
-  }
-};
-
