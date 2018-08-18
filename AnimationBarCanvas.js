@@ -10,14 +10,14 @@ export default class AnimationBar extends React.Component {
     initValue: PropTypes.number,
     value: PropTypes.number.isRequired,
     style: PropTypes.shape({
-      width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired
     })
   };
 
   static defaultProps = {
     color: 'black',
-    initValue: 0
+    initValue: 0,
+    width: 0
   };
 
   constructor(props) {

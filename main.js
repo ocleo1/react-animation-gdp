@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import AnimationBar from './AnimationBar';
 import AnimationBarCSS from './AnimationBarCSS';
 import AnimationBarCanvas from './AnimationBarCanvas';
+import AnimationBarContainer from './AnimationBarContainer';
 
 const GDP = {
   guangdong: [
@@ -77,7 +78,7 @@ class Example extends React.Component {
     }
 
     return (
-      <div>
+      <AnimationBarContainer>
       {
         provinces.map((province, index) => {
           const gdp = GDP[province.name][year];
@@ -87,7 +88,6 @@ class Example extends React.Component {
               style={{
                 marginTop: 5,
                 marginBottom: 5,
-                width: 800,
                 height: 30
               }}
               textStyle={{
@@ -104,7 +104,7 @@ class Example extends React.Component {
           );
         })
       }
-      </div>
+      </AnimationBarContainer>
     );
   }
 }
