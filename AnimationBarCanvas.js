@@ -22,61 +22,50 @@ export default class AnimationBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      value: props.initValue,
-      speed: 0
-    };
+    this.state = {};
 
+    this._value = props.initValue,
+    this._speed = 0
     this._increase = this.increase.bind(this);
   }
 
   componentDidMount() {
-    this._ctx = ReactDOM.findDOMNode(this._ref).getContext('2d');
-
     const { value, duration } = this.props;
-    let speed = value / (duration * FREQUENCY);
-    speed = parseFloat(speed.toFixed(4));
-    this.setState({speed});
+    const speed = value / (duration * FREQUENCY);
+
+    this._speed = parseFloat(speed.toFixed(4));
+    this._ctx = ReactDOM.findDOMNode(this._ref).getContext('2d');
+    this._animationID = window.requestAnimationFrame(this._increase);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { value } = this.state;
     const { value: newValue, duration } = nextProps;
-    let speed = (newValue - value) / (duration * FREQUENCY);
-    speed = parseFloat(speed.toFixed(4));
-    this.setState({speed});
-  }
+    const speed = (newValue - this._value) / (duration * FREQUENCY);
 
-  componentDidUpdate() {
-    const { value, onDone } = this.props;
-
-    if (this.state.value < value) {
-      this._animationID = window.requestAnimationFrame(this._increase);
-    } else {
-      window.cancelAnimationFrame(this._animationID);
-      onDone();
-    }
+    this._speed = parseFloat(speed.toFixed(4));
+    this._animationID = window.requestAnimationFrame(this._increase);
   }
 
   increase() {
     if (!this._ctx) return;
 
-    const { color, style, ratio, textStyle } = this.props;
-    const { value, speed } = this.state;
-    const width = parseFloat((value / ratio).toFixed(2));
+    const { color, style, ratio, textStyle, value, onDone } = this.props;
+    const width = parseFloat((this._value / ratio).toFixed(2));
 
     this._ctx.clearRect(0, 0, style.width, style.height);
     this._ctx.fillStyle = color;
     this._ctx.fillRect(0, 0, width, style.height);
     this._ctx.fillStyle = textStyle.color;
     this._ctx.font = textStyle.font;
-    this._ctx.fillText(value.toFixed(2), width + 10, style.height * 2 / 3);
+    this._ctx.fillText(this._value.toFixed(2), width + 10, style.height * 2 / 3);
 
-    this.setState((prevState, props) => {
-      return {
-        value: prevState.value + speed,
-      };
-    });
+    this._value += this._speed;
+    if (this._value < value) {
+      this._animationID = window.requestAnimationFrame(this._increase);
+    } else {
+      window.cancelAnimationFrame(this._animationID);
+      onDone();
+    }
   }
 
   render() {
