@@ -8,3 +8,6 @@ Please refer to main.js for usage
 ### Demo
 http://onethe.be/react-animation-gdp
 
+### Screenshot
+![Screenshot](http://onethe.be/react-animation-gdp/demo.gif)
+
